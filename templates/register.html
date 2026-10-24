@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<div class="auth-layout"><div class="auth-visual"><div class="auth-orb"><span>CS</span></div><span class="eyebrow">LEVEL UP YOUR SECURITY IQ</span><h1>Make your next move a <span class="gradient-text">secure one.</span></h1><p>One account. Hands-on tools. Better everyday security habits.</p><div class="auth-stat-row"><div><strong>01</strong><span>CHECK PASSWORDS</span></div><div><strong>02</strong><span>SPOT PHISHING</span></div><div><strong>03</strong><span>EARN YOUR BADGE</span></div></div></div>
+<div class="auth-card panel"><div class="eyebrow">NEW OPERATIVE // 01</div><h2>Create account<span class="accent">.</span></h2><p class="muted">Your personal security journey begins here.</p>
+<form method="post" class="form-stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>Display name<input type="text" name="username" placeholder="Your name" autocomplete="name" maxlength="40" required></label><label>Email address<input type="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required></label><label>Create password<input type="password" name="password" placeholder="At least 10 characters" autocomplete="new-password" minlength="10" required><small class="field-hint">Use at least 10 characters. Never reuse an important password.</small></label><button class="button button-primary button-wide" type="submit">CREATE SECURE ACCOUNT <span>→</span></button></form>
+<p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Sign in ↗</a></p><div class="auth-footnote"><span class="status-dot"></span> YOUR PASSWORD IS STORED AS A HASH</div></div></div>
+{% endblock %}

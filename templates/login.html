@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="auth-layout"><div class="auth-visual"><div class="auth-orb"><span>CS</span></div><span class="eyebrow">YOUR DIGITAL DEFENSE STARTS HERE</span><h1>Security is a <span class="gradient-text">mindset.</span></h1><p>Build smarter habits. Spot threats earlier. Take control of your digital world.</p><div class="auth-stat-row"><div><strong>01</strong><span>STAY AWARE</span></div><div><strong>02</strong><span>STAY SECURE</span></div><div><strong>03</strong><span>STAY IN CONTROL</span></div></div></div>
+<div class="auth-card panel"><div class="eyebrow">SECURE ACCESS // 01</div><h2>Welcome back<span class="accent">.</span></h2><p class="muted">Sign in to your security command center.</p>
+<form method="post" class="form-stack"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><label>Email address<input type="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required></label><label>Password<input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required></label><button class="button button-primary button-wide" type="submit">ACCESS YOUR DASHBOARD <span>→</span></button></form>
+<p class="auth-switch">New to CyberShield? <a href="{{ url_for('register') }}">Create your account ↗</a></p><div class="auth-footnote"><span class="status-dot"></span> ENCRYPTED SESSION · PRIVACY FIRST</div></div></div>
+{% endblock %}

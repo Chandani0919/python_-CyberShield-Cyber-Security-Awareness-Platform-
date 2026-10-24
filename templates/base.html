@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="theme-color" content="#080a13">
+  <title>{% block title %}CyberShield{% endblock %} · CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+  <div class="grid-background" aria-hidden="true"></div>
+  <div class="site-shell{% if not g.user %} auth-shell{% endif %}">
+    {% if g.user %}
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">C<span>S</span></span><span>CYBER<span class="brand-light">SHIELD</span></span></a>
+      <div class="sidebar-label">SECURITY CONSOLE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link{% if request.endpoint == 'dashboard' %} active{% endif %}" href="{{ url_for('dashboard') }}"><span>◈</span> Overview</a>
+        <a class="nav-link{% if request.endpoint == 'password_checker' %} active{% endif %}" href="{{ url_for('password_checker') }}"><span>⌑</span> Password lab</a>
+        <a class="nav-link{% if request.endpoint == 'phishing_checker' %} active{% endif %}" href="{{ url_for('phishing_checker') }}"><span>⌕</span> Threat scanner</a>
+        <a class="nav-link{% if request.endpoint in ('quiz', 'certificate') %} active{% endif %}" href="{{ url_for('quiz') }}"><span>▤</span> Cyber quiz</a>
+        <a class="nav-link{% if request.endpoint == 'awareness' %} active{% endif %}" href="{{ url_for('awareness') }}"><span>✳</span> Awareness hub</a>
+        <a class="nav-link{% if request.endpoint == 'profile' %} active{% endif %}" href="{{ url_for('profile') }}"><span>◉</span> My profile</a>
+        {% if g.user.role == 'admin' %}<a class="nav-link{% if request.endpoint in ('admin', 'change_user_role') %} active{% endif %}" href="{{ url_for('admin') }}"><span>⌘</span> Admin center</a>{% endif %}
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="online-status"><span class="status-dot"></span> SYSTEM ONLINE</div>
+        <div class="sidebar-user"><div class="avatar">{{ g.user.username[:1]|upper }}</div><div class="sidebar-user-copy"><strong>{{ g.user.username }}</strong><span>{{ g.user.role|upper }} ACCESS</span></div>
+          <form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="icon-button logout-button" title="Sign out" aria-label="Sign out">↗</button></form>
+        </div>
+      </div>
+    </aside>
+    {% endif %}
+    <main class="main-content">
+      <header class="topbar">
+        {% if g.user %}<button class="icon-button menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button><div class="breadcrumb"><span>SECURITY OS</span><i>/</i><strong>{% block breadcrumb %}OVERVIEW{% endblock %}</strong></div>{% else %}<a class="brand mobile-brand" href="{{ url_for('index') }}"><span class="brand-mark">C<span>S</span></span> CYBERSHIELD</a>{% endif %}
+        <div class="topbar-actions"><span class="live-clock" data-clock>00:00:00 UTC</span><span class="topbar-pulse" title="System online"></span></div>
+      </header>
+      <section class="page-content">
+        {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack" role="status">{% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}<button class="flash-close" aria-label="Dismiss">&times;</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+        {% block content %}{% endblock %}
+      </section>
+      <footer class="footer"><span>CYBERSHIELD <span class="accent">///</span> SECURITY AWARENESS PLATFORM</span><span>STAY ALERT. STAY SECURE.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

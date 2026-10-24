@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}{{ error.code }}{% endblock %}
+{% block content %}
+<div class="error-page panel"><span class="error-code">{{ error.code }}</span><div class="eyebrow">REQUEST COULD NOT BE COMPLETED</div><h1>{{ error.name }}</h1><p>{{ error.description if error.code == 400 else "This page may have moved, or you may not have permission to view it." }}</p><a class="button button-primary" href="{{ url_for('dashboard') if g.user else url_for('login') }}">RETURN TO SAFETY →</a></div>
+{% endblock %}
